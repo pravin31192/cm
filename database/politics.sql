@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 20, 2018 at 09:54 AM
+-- Generation Time: Apr 09, 2019 at 08:26 AM
 -- Server version: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -35,9 +35,17 @@ CREATE TABLE `constituencies` (
   `previous_member` int(11) DEFAULT NULL,
   `previous_member_name` varchar(128) DEFAULT NULL,
   `current_party` int(11) DEFAULT NULL,
+  `slug` varchar(256) DEFAULT NULL,
   `created_at` int(11) DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `constituencies`
+--
+
+INSERT INTO `constituencies` (`id`, `district_id`, `name`, `current_member`, `current_member_name`, `previous_member`, `previous_member_name`, `current_party`, `slug`, `created_at`, `updated_at`) VALUES
+(1, 31, 'Omalur', 20, 'Vetrivel', 12, 'Thamilrasu', 2, 'omalur_constituency_tamilnadu', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -705,6 +713,19 @@ INSERT INTO `districts` (`id`, `state_id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `lookup_party_roles`
+--
+
+CREATE TABLE `lookup_party_roles` (
+  `id` int(11) NOT NULL,
+  `party_role_name` varchar(256) NOT NULL,
+  `created_at` int(11) DEFAULT NULL,
+  `updated_at` int(11) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `migration`
 --
 
@@ -732,6 +753,9 @@ CREATE TABLE `party` (
   `state_id` int(11) NOT NULL,
   `party_name` int(11) NOT NULL,
   `party_abbrevation` int(11) DEFAULT NULL,
+  `found_by` int(11) DEFAULT NULL,
+  `found_by_name` varchar(256) DEFAULT NULL,
+  `slug` varchar(256) DEFAULT NULL,
   `created_at` int(11) DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -866,8 +890,22 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `password_reset_token`, `email`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'admin', 'V7rFbhVaUat_DLCUaOUmC3PZ_NSUV5YS', '$2y$13$koqvLdyNi8OdSXAfMO6pUunEkMV.bGr7oinH3qGibw.wP5VpchvmC', NULL, 'admin@mail.com', 10, 1554795176, 1554795176);
+
+--
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `constituencies`
+--
+ALTER TABLE `constituencies`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id` (`id`);
 
 --
 -- Indexes for table `districts`
@@ -876,10 +914,45 @@ ALTER TABLE `districts`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `lookup_party_roles`
+--
+ALTER TABLE `lookup_party_roles`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id` (`id`);
+
+--
 -- Indexes for table `migration`
 --
 ALTER TABLE `migration`
   ADD PRIMARY KEY (`version`);
+
+--
+-- Indexes for table `party`
+--
+ALTER TABLE `party`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id` (`id`);
+
+--
+-- Indexes for table `party_postings`
+--
+ALTER TABLE `party_postings`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id` (`id`);
+
+--
+-- Indexes for table `politicians`
+--
+ALTER TABLE `politicians`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id` (`id`);
+
+--
+-- Indexes for table `politician_review`
+--
+ALTER TABLE `politician_review`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id` (`id`);
 
 --
 -- Indexes for table `states`
@@ -901,6 +974,36 @@ ALTER TABLE `user`
 --
 
 --
+-- AUTO_INCREMENT for table `constituencies`
+--
+ALTER TABLE `constituencies`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `lookup_party_roles`
+--
+ALTER TABLE `lookup_party_roles`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `party`
+--
+ALTER TABLE `party`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `party_postings`
+--
+ALTER TABLE `party_postings`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `politicians`
+--
+ALTER TABLE `politicians`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `politician_review`
+--
+ALTER TABLE `politician_review`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `states`
 --
 ALTER TABLE `states`
@@ -909,7 +1012,7 @@ ALTER TABLE `states`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
