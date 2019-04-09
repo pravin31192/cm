@@ -2,7 +2,6 @@
 
 namespace backend\models;
 
-use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Districts;
@@ -13,7 +12,7 @@ use app\models\Districts;
 class DistrictsSearch extends Districts
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function rules()
     {
@@ -24,7 +23,7 @@ class DistrictsSearch extends Districts
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function scenarios()
     {
